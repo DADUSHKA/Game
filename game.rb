@@ -26,6 +26,7 @@ class GameControl
     @user = User.new(name, @koloda)
     @assailant = Assailant.new(@koloda)
     handing_over_cards
+    method_name
   end
 
   def handing_over_cards
@@ -33,15 +34,15 @@ class GameControl
     @assailant.start_game
 
     puts '⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂'
-    puts '        -->> Сдача карт:'
+    puts '        -->> Раздача карт:'
     long
     puts
     puts "       :: #{@user.name}: #{@user.vieu_cards}    ::     #{@assailant.name}: ☺, ☺ ? #{@assailant.vieu_cards}"
     puts
-    puts '          ! Карты сданы.'
+    puts '          ! Карты розданы.'
     puts '--------------'
     start_bank
-    method_name
+
   end
 
   def method_name

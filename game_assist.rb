@@ -5,8 +5,7 @@ module GameAssist
     hod_compa
     long
     bank
-    #otkrit_karti
-    clear
+
   end
 
   def dobavit_karty

@@ -1,5 +1,3 @@
-require_relative 'card_deck'
-
 class Assailant
   include PlayerAssist
 

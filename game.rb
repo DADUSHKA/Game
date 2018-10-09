@@ -1,5 +1,4 @@
 require_relative 'player_assist'
-
 require_relative 'assailant'
 require_relative 'bank'
 require_relative 'card_deck'
@@ -12,81 +11,71 @@ class GameControl
   attr_reader :user, :assailant, :welcome
 
   def initialize
-    @koloda = CardDeck.new
-
+    @pack_cards = CardDeck.new
     @bank_assailant = Bank.new
     @bank_user = Bank.new
     welcome
   end
 
   def welcome
-    puts "Приветствую Вас в игре BlackJack
-        чтобы начать игру введите Ваше имя:"
+    puts "Приветствую Вас в игре BlackJack! \n
+        Чтобы начать игру введите Ваше имя:"
     name = gets.capitalize.chomp
-    @user = User.new(name, @koloda)
-    @assailant = Assailant.new(@koloda)
+    fail "Вы не ввели имя игрока" if name.empty?
+    fail "Слишком короткое имя" if name.length < 3
+    @user = User.new(name, @pack_cards)
+    @assailant = Assailant.new(@pack_cards)
     handing_over_cards
-    method_name
+    control_game
+    rescue StandardError => e
+        puts "Erorr: #{e.message}"
+        retry
   end
 
-  def handing_over_cards
-    @user.start_game
-    @assailant.start_game
-
-    puts '⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂'
-    puts '        -->> Раздача карт:'
-    long
-    puts
-    puts "       :: #{@user.name}: #{@user.vieu_cards}    ::     #{@assailant.name}: ☺, ☺ ? #{@assailant.vieu_cards}"
-    puts
-    puts '          ! Карты розданы.'
-    puts '--------------'
-    start_bank
-
-  end
-
-  def method_name
+  def control_game
     catch :exit do
       loop do
-        puts '⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂'
-        puts '          Игра'
-        main_menu
+        puts '---------------'
+        menu_game
         first_command = command
         throw :exit if first_command == '9'
         case first_command
         when '1'
           option(scoring)
         when '2'
-          option(dobavit_karty)
+          option(add_cards)
         when '3'
-          option(otkrit_karti)
+          option(open_cards)
         when '4'
           option(handing_over_cards)
         else
           option(wrong)
+
         end
+      rescue StandardError => e
+        puts "Erorr: #{e.message}"
+        retry
       end
     end
   end
 
-  def main_menu
+  def menu_game
     if @sum == 20
       puts "  Ваши #{@user.name} действия :
               1 - Пропустить ход
               2 - Добавить карту
               3 - Открыть карты"
-
     end
 
-    if @sum == 0
-
+    if @sum.zero?
+      @assailant.on_hands.clear
       puts "  Ваши #{@user.name} действия :
               4 - Продолжить игру
               9 - Выйти"
-
-
     end
   end
+
+  private
 
   def option(menu_opt)
     menu_opt
@@ -107,13 +96,22 @@ class GameControl
     puts 'Не правильный выбор команды'
   end
 
-def long
-  sleep(3)
-end
+  def long_1
+    sleep(1)
+  end
 
-def get_get
- gets
-end
+  def long_2
+    sleep(2)
+  end
+
+  def long_3
+    sleep(3)
+  end
+
+  def validate!
+    raise  "#{@user.name}не может пропустить ход!" if @assailant.open_cards.to_i > 17
+    raise "#{@user.name}не может пропустить ход!" if @assailant.on_hands.size == 3
+  end
 
 end
 

@@ -1,29 +1,45 @@
 module GameAssist
-  def scoring # подсчет с первой раздачи
-    @user.open_cards_validate
-    @assailant.open_cards_validate
-    hod_compa
-    long
-    bank
+  private
+  def handing_over_cards
+    @user.start_game
+    @assailant.start_game
+    puts " #{@user.name}, игра началась!"
+    long_1
+    puts '        -->> Раздача карт-->>'
+    long_3
+    puts
+    puts "   ! Карты розданы. !\n    :: #{@user.name}: #{@user.vieu_cards}
+    :: #{@assailant.name}: ☺, ☺ ?"
+    puts '            Ставки сделаны!'
+    start_bank
+  end
+
+  def scoring
+    validate!
+    @user.open_cards
+    @assailant.open_cards
+
+
+    opponent_move if @assailant.open_cards.to_i < 17 &&  @assailant.on_hands.size == 2
+    long_2
+
 
   end
 
-  def dobavit_karty
+  def add_cards
     @user.add_card
-    puts "         -->> #{@user.view}"
-    hod_compa
-    otkrit_karti
+    puts "         -->> #{@user.view}-->>"
+    p @assailant.open_cards
+    opponent_move if @assailant.open_cards.to_i < 17
+    open_cards
   end
 
-  def otkrit_karti
-    puts '⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂'
+  def open_cards
     puts '             Итоги игры:'
-    message_itogo
-    puts "      :: #{@user.name}: #{@user.vieu_cards}  - очки: #{@user.open_cards}
-      :: #{@assailant.name}: #{@assailant.vieu_cards}  - очки: #{@assailant.open_cards} "
+    message_game
+    puts "      :: #{@user.name}: #{@user.vieu_cards}  - очки: #{@user.open_cards_validate}
+      :: #{@assailant.name}: #{@assailant.vieu_cards}  - очки: #{@assailant.open_cards_validate} "
     bank
-    puts @koloda.deck_cards.size.to_s
-    puts '⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂⁂'
   end
 
   def start_bank
@@ -38,57 +54,52 @@ module GameAssist
     puts "          На кону: ₽#{@sum}"
   end
 
-  def message_itogo
-    if @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i > 21
-      puts '   ☹  Вы проиграли'
-      @bank_user.bank
-      @bank_assailant.bank_plus_two
-      @sum = 0
-    end
-
-    if @assailant.open_cards.to_i > @user.open_cards.to_i &&
-        @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i < 21
-      puts '   ☹  Вы проиграли'
-      @bank_user.bank
-      @bank_assailant.bank_plus_two
-      @sum = 0
-    end
-
-    if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i <= 21
-      puts '    ☺ Вы выиграли'
-      @bank_user.bank_plus_two
-      @bank_assailant.bank
-      @sum = 0
-    end
-
-    if @assailant.open_cards.to_i < @user.open_cards.to_i &&
-        @assailant.open_cards.to_i < 21 && @user.open_cards.to_i <= 21
-      puts '    ☺ Вы выиграли'
-      @bank_user.bank_plus_two
-      @bank_assailant.bank
-      @sum = 0
-    end
-
-    if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i > 21
-      puts '    ☺ Ничия'
-      @bank_user.bank_plus_one
-      @bank_assailant.bank_plus_one
-      @sum = 0
-    end
-
-    if @assailant.open_cards.to_i == @user.open_cards.to_i
-      puts '    ☺ Ничия'
-      @bank_user.bank_plus_one
-      @bank_assailant.bank_plus_one
-      @sum = 0
-    end
+  def message_game
+    message_lose
+    message_won
+    message_dead_heat
   end
 
-  def hod_compa
-    puts "  -->> Ход #{@assailant.name}:   --> * " if @assailant.open_cards.to_i < 17
-    @assailant.add_card if @assailant.open_cards.to_i < 17
-    puts @bank_assailant.bank.to_s
+  def message_lose
+    you_lose if @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i > 21
+    you_lose if @assailant.open_cards.to_i > @user.open_cards.to_i &&
+                @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i < 21
   end
 
-  def proverka_tyza; end
+  def message_won
+    you_won if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i <= 21
+    you_won if @assailant.open_cards.to_i < @user.open_cards.to_i &&
+               @assailant.open_cards.to_i < 21 && @user.open_cards.to_i <= 21
+  end
+
+  def message_dead_heat
+    dead_heat if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i > 21
+    dead_heat if @assailant.open_cards.to_i == @user.open_cards.to_i
+  end
+
+  def you_lose
+    puts '          ☹ Вы проиграли ☹'
+    @bank_user.bank
+    @bank_assailant.bank_plus_two
+    @sum = 0
+  end
+
+  def you_won
+    puts '          ☺  Вы выиграли ☺'
+    @bank_user.bank_plus_two
+    @bank_assailant.bank
+    @sum = 0
+  end
+
+  def dead_heat
+    puts '          ☺  Ничья ☺'
+    @bank_user.bank_plus_one
+    @bank_assailant.bank_plus_one
+    @sum = 0
+  end
+
+  def opponent_move
+    puts "  -->> Ход #{@assailant.name}  --> * "
+    @assailant.add_card
+  end
 end

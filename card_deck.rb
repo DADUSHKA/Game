@@ -1,5 +1,5 @@
 class CardDeck
-  attr_reader :move_card_one, :move_card_two, :deck_cards
+  attr_reader :move_card_one, :move_card_two
 
   def initialize
     int = [10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10]

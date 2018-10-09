@@ -1,5 +1,3 @@
-require_relative 'card_deck'
-
 class User
   include PlayerAssist
 

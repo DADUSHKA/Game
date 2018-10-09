@@ -27,9 +27,9 @@ class GameControl
     @assailant = Assailant.new(@pack_cards)
     handing_over_cards
     control_game
-    rescue StandardError => e
-        puts "Erorr: #{e.message}"
-        retry
+  rescue StandardError => e
+    puts "Erorr: #{e.message}"
+    retry
   end
 
   def control_game
@@ -50,7 +50,6 @@ class GameControl
           option(handing_over_cards)
         else
           option(wrong)
-
         end
       rescue StandardError => e
         puts "Erorr: #{e.message}"
@@ -109,10 +108,10 @@ class GameControl
   end
 
   def validate!
-    raise  "#{@user.name}не может пропустить ход!" if @assailant.open_cards.to_i > 17
-    raise "#{@user.name}не может пропустить ход!" if @assailant.on_hands.size == 3
+    raise  "#{@user.name} не может пропустить ход!" if @assailant.open_cards.to_i > 17
+    raise "#{@user.name} не может пропустить ход!" if @assailant.on_hands.size == 3
   end
 
 end
 
-GameControl.new
+ GameControl.new

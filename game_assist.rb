@@ -1,5 +1,6 @@
 module GameAssist
   private
+
   def handing_over_cards
     @user.start_game
     @assailant.start_game
@@ -18,17 +19,14 @@ module GameAssist
     validate!
     @user.open_cards
     @assailant.open_cards
-
-
-    opponent_move if @assailant.open_cards.to_i < 17 &&  @assailant.on_hands.size == 2
+    opponent_move if @assailant.open_cards.to_i < 17 && @assailant.on_hands.size == 2
     long_2
-
-
   end
 
   def add_cards
     @user.add_card
     puts "         -->> #{@user.view}-->>"
+    long_2
     p @assailant.open_cards
     opponent_move if @assailant.open_cards.to_i < 17
     open_cards
@@ -37,8 +35,8 @@ module GameAssist
   def open_cards
     puts '             Итоги игры:'
     message_game
-    puts "      :: #{@user.name}: #{@user.vieu_cards}  - очки: #{@user.open_cards_validate}
-      :: #{@assailant.name}: #{@assailant.vieu_cards}  - очки: #{@assailant.open_cards_validate} "
+    puts "      :: #{@user.name}: #{@user.vieu_cards}  - очки: #{@user.open_cards_valid}
+      :: #{@assailant.name}: #{@assailant.vieu_cards}  - очки: #{@assailant.open_cards_valid} "
     bank
   end
 
@@ -61,20 +59,20 @@ module GameAssist
   end
 
   def message_lose
-    you_lose if @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i > 21
-    you_lose if @assailant.open_cards.to_i > @user.open_cards.to_i &&
-                @assailant.open_cards.to_i <= 21 && @user.open_cards.to_i < 21
+    you_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21
+    you_lose if @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
+                @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
   end
 
   def message_won
-    you_won if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i <= 21
-    you_won if @assailant.open_cards.to_i < @user.open_cards.to_i &&
-               @assailant.open_cards.to_i < 21 && @user.open_cards.to_i <= 21
+    you_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21
+    you_won if @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
+               @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
   end
 
   def message_dead_heat
-    dead_heat if @assailant.open_cards.to_i > 21 && @user.open_cards.to_i > 21
-    dead_heat if @assailant.open_cards.to_i == @user.open_cards.to_i
+    dead_heat if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i > 21
+    dead_heat if @assailant.open_cards_valid.to_i == @user.open_cards_valid.to_i
   end
 
   def you_lose

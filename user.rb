@@ -3,9 +3,9 @@ class User
 
   attr_reader :name, :on_hands
 
-  def initialize(name, koloda)
+  def initialize(name, deck)
     @name = name
-    @kol = koloda
+    @deck = deck
   end
 
   def view

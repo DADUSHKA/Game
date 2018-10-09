@@ -3,8 +3,8 @@ class Assailant
 
   attr_reader :name, :on_hands
 
-  def initialize(koloda)
+  def initialize(deck)
     @name = 'Compute'
-    @kol = koloda
+    @deck = deck
   end
 end

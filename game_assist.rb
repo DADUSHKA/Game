@@ -1,103 +1,89 @@
-module GameAssist
-  private
-
-  def handing_over_cards
-    @user.start_game
-    @assailant.start_game
-    puts " #{@user.name}, игра началась!"
-    long_1
-    puts '        -->> Раздача карт-->>'
-    long_3
-    puts
-    puts "   ! Карты розданы. !\n    :: #{@user.name}: #{@user.vieu_cards}
-    :: #{@assailant.name}: ☺, ☺ ?"
-    puts '            Ставки сделаны!'
-    start_bank
+class GameAssist
+  def welcome
+    puts "Приветствую Вас в игре BlackJack! \n
+        Чтобы начать игру введите Ваше имя:"
   end
 
-  def scoring
-    validate!
-    @user.open_cards
-    @assailant.open_cards
-    opponent_move if @assailant.open_cards.to_i < 17 && @assailant.on_hands.size == 2
-    long_2
+  def doing_one(var)
+    puts "  Ваши #{var} действия :
+              1 - Пропустить ход
+              2 - Добавить карту
+              3 - Открыть карты"
   end
 
-  def add_cards
-    @user.add_card
-    puts "         -->> #{@user.view}-->>"
-    long_2
-    p @assailant.open_cards
-    opponent_move if @assailant.open_cards.to_i < 17
-    open_cards
-  end
-
-  def open_cards
-    puts '             Итоги игры:'
-    message_game
-    puts "      :: #{@user.name}: #{@user.vieu_cards}  - очки: #{@user.open_cards_valid}
-      :: #{@assailant.name}: #{@assailant.vieu_cards}  - очки: #{@assailant.open_cards_valid} "
-    bank
-  end
-
-  def start_bank
-    @bank_assailant.bank_minus
-    @bank_user.bank_minus
-    @sum = 20
-    bank
-  end
-
-  def bank
-    puts "          Счет #{@user.name}:(₽#{@bank_user.bank})  ::  Cчет #{@assailant.name}:₽#{@bank_assailant.bank}"
-    puts "          На кону: ₽#{@sum}"
-  end
-
-  def message_game
-    message_lose
-    message_won
-    message_dead_heat
-  end
-
-  def message_lose
-    you_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21
-    you_lose if @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
-                @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
-  end
-
-  def message_won
-    you_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21
-    you_won if @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
-               @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
-  end
-
-  def message_dead_heat
-    dead_heat if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i > 21
-    dead_heat if @assailant.open_cards_valid.to_i == @user.open_cards_valid.to_i
+  def doing_two(var)
+    puts "  Ваши #{var} действия :
+              4 - Продолжить игру
+              9 - Выйти"
   end
 
   def you_lose
     puts '          ☹ Вы проиграли ☹'
-    @bank_user.bank
-    @bank_assailant.bank_plus_two
-    @sum = 0
   end
 
   def you_won
     puts '          ☺  Вы выиграли ☺'
-    @bank_user.bank_plus_two
-    @bank_assailant.bank
-    @sum = 0
   end
 
   def dead_heat
     puts '          ☺  Ничья ☺'
-    @bank_user.bank_plus_one
-    @bank_assailant.bank_plus_one
-    @sum = 0
   end
 
-  def opponent_move
-    puts "  -->> Ход #{@assailant.name}  --> * "
-    @assailant.add_card
+  def opponent_move(var)
+    puts "  -->> Ход #{var}  --> * "
   end
+
+  def handing_over_cards(var1, var2, var3)
+    puts " #{var1}, игра началась!"
+    long_1
+    puts '        -->> Раздача карт-->>'
+    long_3
+    puts
+    puts "          ! Карты розданы. !\n         :: #{var1}: #{var2}
+         :: #{var3}: ☺, ☺ ?"
+    puts '            Ставки сделаны!'
+  end
+
+  def pause
+    puts "Продолжить: нажать 'Enter' "
+    gets
+  end
+
+  def command
+    puts 'Введите цифру'
+    gets.chomp
+  end
+
+  def wrong
+    puts 'Не правильный выбор команды'
+  end
+
+  def add_cards(var)
+    puts "         -->> #{var}-->>"
+    long_2
+  end
+
+  def bank(name1, bank1, name2, bank2, sum)
+    puts " Счет #{name1}:(₽#{bank1})  ::  Cчет #{name2}:₽#{bank2}"
+    puts "          На кону: ₽#{sum}"
+  end
+
+  def long_1
+    sleep(1)
+  end
+
+  def long_2
+    sleep(2)
+  end
+
+  def long_3
+    sleep(3)
+  end
+
+  def open_cards(name1, vieu1, open1, name2, vieu2, open2)
+    puts '             Итоги игры:'
+    puts "      :: #{name1}: #{vieu1}  - очки: #{open1}
+      :: #{name2}: #{vieu2}  - очки: #{open2} "
+  end
+
 end

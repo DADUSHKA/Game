@@ -1,4 +1,4 @@
-require_relative 'player_assist'
+require_relative 'player'
 require_relative 'user'
 require_relative 'assailant'
 require_relative 'bank'

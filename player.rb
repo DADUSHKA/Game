@@ -1,4 +1,12 @@
-module PlayerAssist
+class Player
+
+ attr_reader :name, :on_hands
+
+  def initialize(name = "Assistent", deck)
+    @name = name
+    @deck = deck
+  end
+
   def add_card
     @on_hands << @deck.move_card_one
   end

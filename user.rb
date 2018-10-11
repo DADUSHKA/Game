@@ -1,11 +1,6 @@
-class User
-  include PlayerAssist
-
-  attr_reader :name, :on_hands
-
+class User < Player
   def initialize(name, deck)
-    @name = name
-    @deck = deck
+   super
   end
 
   def view

@@ -1,19 +1,7 @@
 class Card
-  attr_reader :move_card_one, :move_card_two
 
-  def initialize(deck)
-    @deck_cards = deck
-  end
+  CARD_VALUE = [10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-  def move_card_one
-    p = @deck_cards.size
-    i = rand(p)
-    @deck_cards[i]
-  end
+  MAJOR_CARD = %w[V D K T]
 
-  def move_card_two
-    arr = []
-    2.times { arr << move_card_one }
-    arr
-  end
 end

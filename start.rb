@@ -4,6 +4,7 @@ require_relative 'assailant'
 require_relative 'bank'
 require_relative 'deck'
 require_relative 'card'
+require_relative 'cards_on_hands'
 require_relative 'game_assist'
 require_relative 'game_control'
 
@@ -14,4 +15,4 @@ class Start
   end
 
 end
-Start.new
+ Start.new

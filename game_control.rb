@@ -4,8 +4,7 @@ class GameControl
 
   def initialize
     @message = GameAssist.new
-    deck = Deck.new
-    @pack_cards = Card.new(deck.deck_cards)
+    @pack_cards = CardsOnHands.new
     @bank_assailant = Bank.new
     @bank_user = Bank.new
     welcome

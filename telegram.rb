@@ -91,12 +91,7 @@ class TelegramInterface
   end
 
   def get_user
-    @name = gets.capitalize.chomp
-    # validate!
+    gets.capitalize.chomp
   end
 
-  def validate!
-    raise 'Вы не ввели имя игрока' if @name.empty?
-    raise 'Слишком короткое имя' if @name.length < 3
-  end
 end

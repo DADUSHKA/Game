@@ -13,7 +13,6 @@ class BlackJack
   def initialize
     telegram = TelegramInterface.new
     game = Game.new(telegram)
-
     TerminalInterface.new(game, telegram)
   end
 end

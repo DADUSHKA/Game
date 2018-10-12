@@ -6,10 +6,10 @@ class TerminalInterface
   end
 
   def welcome
-    # fail "Вы не ввели имя игрока" if name.empty?
-    # fail "Слишком короткое имя" if name.length < 3
-    @game.add_players
-
+    @message.welcome
+    @name = gets.capitalize.chomp
+    validate!
+    @game.create_players(@name)
     @game.handing_over_cards
     control_game
   rescue StandardError => e
@@ -36,9 +36,9 @@ class TerminalInterface
         else
           option(@message.wrong)
         end
-        rescue StandardError => e
-           @message.error_message(e.message)
-          retry
+      rescue StandardError => e
+        @message.error_message(e.message)
+        retry
       end
     end
   end
@@ -46,5 +46,10 @@ class TerminalInterface
   def option(menu_opt)
     menu_opt
     @message.pause
+  end
+
+   def validate!
+    raise "Вы не ввели имя игрока" if @name.empty?
+    raise "Слишком короткое имя" if@name.length < 3
   end
 end

@@ -10,6 +10,9 @@ Style/Documentation:
 Metrics/MethodLength:
   Max: 35
 
+Metrics/ParameterLists:
+  Max: 7
+
 Metrics/ClassLength:
    Max: 350
 

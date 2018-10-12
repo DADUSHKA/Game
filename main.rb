@@ -5,15 +5,15 @@ require_relative 'bank'
 require_relative 'deck'
 require_relative 'card'
 require_relative 'cards_on_hands'
-require_relative 'telegram'
+require_relative 'message'
 require_relative 'terminal'
 require_relative 'game'
 
 class BlackJack
   def initialize
-    telegram = TelegramInterface.new
-    game = Game.new(telegram)
-    TerminalInterface.new(game, telegram)
+    message = GameMessage.new
+    game = Game.new(message)
+    TerminalInterface.new(game, message)
   end
 end
 BlackJack.new

@@ -1,4 +1,4 @@
-class TelegramInterface
+class GameMessage
   def welcome
     puts "Приветствую Вас в игре BlackJack! \n
         Чтобы начать игру введите Ваше имя:"

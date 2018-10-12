@@ -1,7 +1,7 @@
 class TerminalInterface
-  def initialize(game, telegram)
+  def initialize(game, message)
     @game = game
-    @message = telegram
+    @message = message
     welcome
   end
 

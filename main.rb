@@ -11,9 +11,8 @@ require_relative 'game'
 
 class BlackJack
   def initialize
-    message = GameMessage.new
-    game = Game.new(message)
-    TerminalInterface.new(game, message)
+    game = Game.new
+    TerminalInterface.new(game)
   end
 end
 BlackJack.new

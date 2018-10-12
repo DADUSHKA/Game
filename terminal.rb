@@ -1,21 +1,20 @@
 class TerminalInterface
-  def initialize(game, message)
+  def initialize(game)
     @game = game
-    @message = message
     welcome
   end
 
   private
 
   def welcome
-    @message.welcome
+    @game.welcome
     @name = gets.capitalize.chomp
     validate!
     @game.create_players(@name)
     @game.handing_over_cards
     control_game
   rescue StandardError => e
-    @message.error_message(e.message)
+    @game.error_message(e.message)
     retry
   end
 
@@ -24,7 +23,7 @@ class TerminalInterface
       loop do
         puts '---------------'
         @game.menu_game
-        first_command = @message.command
+        first_command = @game.command
         throw :exit if first_command == '9'
         case first_command
         when '1'
@@ -36,10 +35,10 @@ class TerminalInterface
         when '4'
           option(@game.handing_over_cards)
         else
-          option(@message.wrong)
+          option(@game.wrong)
         end
       rescue StandardError => e
-        @message.error_message(e.message)
+        @game.error_message(e.message)
         retry
       end
     end
@@ -47,7 +46,7 @@ class TerminalInterface
 
   def option(menu_opt)
     menu_opt
-    @message.pause
+    @game.pause
   end
 
   def validate!

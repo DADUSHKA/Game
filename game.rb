@@ -1,7 +1,7 @@
 class Game
-  def initialize(telegram)
+  def initialize
     @deck = CardsOnHands.new
-    @message = telegram
+    @message = GameMessage.new
     @bank_assailant = Bank.new
     @bank_user = Bank.new
   end
@@ -66,13 +66,13 @@ class Game
   def message_lose
     you_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21
     you_lose if @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
-                @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
+      @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
   end
 
   def message_won
     you_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21
     you_won if @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
-               @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
+      @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
   end
 
   def message_dead_heat
@@ -104,6 +104,26 @@ class Game
   def opponent_move
     @message.opponent_move(@assailant.name)
     @assailant.add_card
+  end
+
+  def welcome
+    @message.welcome
+  end
+
+  def error_message(mes)
+    @message.error_message(mes)
+  end
+
+  def command
+    @message.command
+  end
+
+  def wrong
+    @message.wrong
+  end
+
+  def pause
+    @message.pause
   end
 
   private

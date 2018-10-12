@@ -1,6 +1,5 @@
 require_relative 'card'
 class Deck
-
   attr_reader :deck_cards
 
   def initialize
@@ -18,4 +17,3 @@ class Deck
     @deck_cards = int4.sort
   end
 end
-

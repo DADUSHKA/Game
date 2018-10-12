@@ -1,5 +1,5 @@
 class Assailant < Player
-  def initialize( deck)
- super
+  def initialize(deck)
+    super
   end
 end

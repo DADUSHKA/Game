@@ -1,6 +1,8 @@
 class User < Player
-  def initialize(name, deck)
-   super
+attr_reader :name
+
+  def initialize(name = 'iuiu', deck)
+    super
   end
 
   def view

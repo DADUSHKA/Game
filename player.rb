@@ -1,7 +1,7 @@
 class Player
   attr_reader :name, :on_hands
 
-  def initialize(name = 'Assistent', deck)
+  def initialize(deck, name = 'Antagonist')
     @name = name
     @deck = deck
   end

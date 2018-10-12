@@ -89,9 +89,4 @@ class TelegramInterface
   def error_message(mes)
     puts "Erorr: #{mes}"
   end
-
-  def get_user
-    gets.capitalize.chomp
-  end
-
 end

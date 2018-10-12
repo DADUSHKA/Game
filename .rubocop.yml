@@ -28,8 +28,11 @@ Lint/Void:
 Metrics/CyclomaticComplexity:
   Max: 20
 
+Style/MutableConstant:
+   Enabled: false
 
-
+GuardClause:
+   Enabled: false
 
 
 

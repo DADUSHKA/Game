@@ -5,6 +5,8 @@ class TerminalInterface
     welcome
   end
 
+  private
+
   def welcome
     @message.welcome
     @name = gets.capitalize.chomp
@@ -48,7 +50,7 @@ class TerminalInterface
     @message.pause
   end
 
-   def validate!
+  def validate!
     raise "Вы не ввели имя игрока" if @name.empty?
     raise "Слишком короткое имя" if@name.length < 3
   end

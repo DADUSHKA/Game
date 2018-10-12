@@ -1,5 +1,4 @@
 class Game
-
   def initialize(telegram)
     @deck = CardsOnHands.new
     @message = telegram
@@ -9,7 +8,7 @@ class Game
 
   def create_players(user)
     name = user
-    @user = User.new(name, @deck)
+    @user = User.new(@deck, name)
     @assailant = Assailant.new(@deck)
   end
 
@@ -67,13 +66,13 @@ class Game
   def message_lose
     you_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21
     you_lose if @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
+                @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
   end
 
   def message_won
     you_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21
     you_won if @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
+               @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
   end
 
   def message_dead_heat
@@ -107,8 +106,9 @@ class Game
     @assailant.add_card
   end
 
-  def validate!
+  private
 
+  def validate!
     raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards.to_i > 17
     raise "#{@user.name} не может пропустить ход!" if @assailant.on_hands.size == 3
   end

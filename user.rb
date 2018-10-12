@@ -1,7 +1,7 @@
 class User < Player
-attr_reader :name
+  attr_reader :name
 
-  def initialize(name = 'iuiu', deck)
+  def initialize(deck, name)
     super
   end
 

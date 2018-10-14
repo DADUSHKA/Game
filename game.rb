@@ -2,7 +2,7 @@ class Game
   attr_reader :user, :assailant, :bank_user, :bank_assailant, :sum
 
   def initialize
-    @deck = CardsOnHands.new
+    @deck = Deck.new
     @bank_assailant = Bank.new
     @bank_user = Bank.new
   end

@@ -13,7 +13,7 @@ class TerminalInterface
     @game.create_players(@name)
     play_game
   rescue StandardError => e
-    error_message(e.message)
+    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -63,7 +63,7 @@ class TerminalInterface
           option(wrong)
         end
       rescue StandardError => e
-        error_message(e.message)
+        puts "Ошибка: #{e.message}"
         retry
       end
     end
@@ -133,7 +133,7 @@ class TerminalInterface
     long_3
     puts
     puts "          ! Карты розданы. !\n         :: #{@game.user.name}: #{@game.user.vieu_cards}
-         :: #{@game.assailant.name}: ☺, ☺ ?"
+         :: #{@game.assailant.name}: ☺ , ☺ ?"
     puts '            Ставки сделаны!'
   end
 
@@ -166,10 +166,6 @@ class TerminalInterface
 
   def long_3
     sleep(3)
-  end
-
-  def error_message(mes)
-    puts "Erorr: #{mes}"
   end
 
   def validate!

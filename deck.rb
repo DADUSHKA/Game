@@ -1,31 +1,25 @@
 class Deck
 
-  attr_reader :deck_cards
+  attr_reader :cards
 
   def initialize
-    @deck_cards = generate_cards
+    @cards = generate_cards
   end
 
-   def move_card_one
-    p = @deck_cards.size
-    i = rand(p)
-    @deck_cards[i]
+  def move_card_two(count = 2)
+    @cards.sample(count).each { |value| value }
   end
 
-  def move_card_two
-    arr = []
-    2.times { arr << move_card_one }
-    arr
+  def move_card_one
+    move_card_two(1)
   end
-
-  private
 
   def generate_cards
-    (2..10).each { |i| Card::MAJOR_CARD << i.to_s }
-    int1 = Card::MAJOR_CARD.map { |i| i + '♧'  }.zip(Card::CARD_VALUE).to_h
-    int2 = Card::MAJOR_CARD.map { |i| i + '♤'  }.zip(Card::CARD_VALUE).to_h.merge(int1)
-    int3 = Card::MAJOR_CARD.map { |i| i + '♥'  }.zip(Card::CARD_VALUE).to_h.merge(int2)
-    int4 = Card::MAJOR_CARD.map { |i| i + '♦'  }.zip(Card::CARD_VALUE).to_h.merge(int3)
-    @deck_cards = int4.sort
-  end
+    Card::CARD_SUITS.each_with_object([]) do |suit, a|
+      Card::CARD_VALUES.each do |rank|
+        a << Card.new(suit, rank)
+      end
+    end.shuffle!
+end
+
 end

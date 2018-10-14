@@ -25,13 +25,13 @@ class TerminalInterface
   end
 
   def skip_stroke
-    opponent_move if @game.assailant.open_cards.to_i < 17
+    opponent_move if @game.assailant.open_cards_valid.to_i < 17
     @game.skip_stroke
     bank
   end
 
   def add_card
-    opponent_move if @game.assailant.open_cards.to_i < 17
+    opponent_move if @game.assailant.open_cards_valid.to_i < 17 && @assailant.hands.size == 2
     @game.add_cards
     add_cards
     open_cards
@@ -100,8 +100,8 @@ class TerminalInterface
 
   def game_results
     puts '             Итоги игры:'
-    puts "      :: #{@game.user.name}: #{@game.user.vieu_cards}  - очки: #{@game.user.open_cards_valid}
-      :: #{@game.assailant.name}: #{@game.assailant.vieu_cards}  - очки: #{@game.assailant.open_cards_valid} "
+    puts "      :: #{@game.user.name}: #{@game.user.view_cards}  - очки: #{@game.user.open_cards_valid}
+      :: #{@game.assailant.name}: #{@game.assailant.view_cards}  - очки: #{@game.assailant.open_cards_valid} "
   end
 
   def bank
@@ -132,7 +132,7 @@ class TerminalInterface
     puts '        -->> Раздача карт-->>'
     long_3
     puts
-    puts "          ! Карты розданы. !\n         :: #{@game.user.name}: #{@game.user.vieu_cards}
+    puts "          ! Карты розданы. !\n         :: #{@game.user.name}: #{@game.user.view_cards}
          :: #{@game.assailant.name}: ☺ , ☺ ?"
     puts '            Ставки сделаны!'
   end
@@ -152,7 +152,7 @@ class TerminalInterface
   end
 
   def add_cards
-    puts "         -->>Ход: #{@game.user.name} -->> #{@game.user.view}-->>"
+    puts "         -->>Ход: #{@game.user.name} -->> ☺ -->>"
     long_2
   end
 

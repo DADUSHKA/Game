@@ -13,4 +13,4 @@ class BlackJack
     TerminalInterface.new(game)
   end
 end
-BlackJack.new
+ BlackJack.new

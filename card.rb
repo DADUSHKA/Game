@@ -1,9 +1,12 @@
 class Card
+attr_reader :suit, :value
 
-SUITS = %w[♦️ ♣️ ♠️ ♥️]
- RANKS = %w[2 3 4 5 6 7 8 9 10 J Q K A]
+  def initialize(suit, value)
+    @suit = suit
+    @value = value
+  end
 
-  CARD_VALUE = [10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  CARD_SUIT = %w[♧ ♥ ♤ ♦]
-  MAJOR_CARD = %w[V D K T]
+  CARD_SUITS = %w(♡ ♧ ♢ ♤)
+  CARD_VALUES = %w(2 3 4 5 6 7 8 9 10 J Q K A)
+
 end

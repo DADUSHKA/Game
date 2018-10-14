@@ -14,21 +14,22 @@ class Game
   end
 
   def handing_over_cards
-    @user.start_game
-    @assailant.start_game
+    @user.add_two_card
+    @assailant.add_two_card
     start_bank
   end
 
   def skip_stroke
-    @user.open_cards
-    @assailant.open_cards
+    @user.open_cards_valid
+    @assailant.open_cards_valid
     validate!
-    opponent_move if @assailant.open_cards.to_i < 17
+    opponent_move if @assailant.open_cards_valid.to_i < 17
   end
 
   def add_cards
-    @user.add_card
-    opponent_move if @assailant.open_cards.to_i < 17
+    validate!
+    @user.add_one_card
+    opponent_move if @assailant.open_cards_valid.to_i < 17 && @assailant.hands.size == 2
   end
 
   def control_lose
@@ -57,7 +58,7 @@ class Game
   end
 
   def opponent_move
-    @assailant.add_card
+    @assailant.add_one_card
   end
 
   def user_lose
@@ -79,7 +80,8 @@ class Game
   end
 
   def validate!
-    raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards.to_i > 17
-    raise "#{@user.name} не может пропустить ход!" if @assailant.on_hands.size == 3
+    # raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards_valid.to_i > 17
+    raise "#{@user.name} не может пропустить ход!" if @assailant.hands.size == 3
+    raise "#{@user.name} не может взять четвертую карту!" if @user.hands.size == 3
   end
 end

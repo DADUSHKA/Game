@@ -5,7 +5,4 @@ class User < Player
     super
   end
 
-  def view
-    @on_hands.last.first
-  end
 end

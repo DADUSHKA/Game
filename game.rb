@@ -34,19 +34,19 @@ class Game
 
   def control_lose
     user_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21 ||
-      @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
+                 @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
+                 @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
   end
 
   def control_won
     user_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21 ||
-      @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
+                @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
+                @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
   end
 
   def control_dead_heat
     dead_heat if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i > 21 ||
-      @assailant.open_cards_valid.to_i == @user.open_cards_valid.to_i
+                 @assailant.open_cards_valid.to_i == @user.open_cards_valid.to_i
   end
 
   private
@@ -80,7 +80,7 @@ class Game
   end
 
   def validate!
-    # raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards_valid.to_i > 17
+    raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards_valid.to_i > 17
     raise "#{@user.name} не может пропустить ход!" if @assailant.hands.size == 3
     raise "#{@user.name} не может взять четвертую карту!" if @user.hands.size == 3
   end

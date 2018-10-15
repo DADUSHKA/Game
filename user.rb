@@ -4,5 +4,4 @@ class User < Player
   def initialize(deck, name)
     super
   end
-
 end

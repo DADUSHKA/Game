@@ -1,6 +1,5 @@
 class Player
-
-WIN_SCORE = 21
+  WIN_SCORE = 21
   DEFAULT_VALUE = 10
   ACE_MIN_VALUE = 1
   ACE_MAX_VALUE = 11
@@ -22,13 +21,10 @@ WIN_SCORE = 21
     @hands.concat(@deck.move_card_two)
   end
 
-
-
-
   def view_cards
     var = []
     @hands.each do |obj|
-      var << "#{obj.suit+' '+ obj.value} "
+      var << "#{obj.suit + ' ' + obj.value} "
     end
     var.join(' , ')
   end
@@ -40,23 +36,21 @@ WIN_SCORE = 21
       ace_count += ACE_MIN_VALUE if card.value == 'A'
       total_score += get_card_score(card)
     end
-    add_additional_ace_score(total_score, ace_count)
+    add_ace_score(total_score, ace_count)
   end
-
 
   private
 
-
-   def add_additional_ace_score(total_score, ace_count)
+  def add_ace_score(total_score, ace_count)
     ace_count.times do
       ace_score = ACE_MAX_VALUE - ACE_MIN_VALUE
       total_score += ace_score if total_score + ace_score <= WIN_SCORE + 5
     end
     total_score
-  end
+   end
 
   def get_card_score(card)
-    if %w(J Q K).include? card.value
+    if %w[J Q K].include? card.value
       DEFAULT_VALUE
     elsif card.value == 'A'
       ACE_MAX_VALUE
@@ -64,38 +58,5 @@ WIN_SCORE = 21
       card.value.to_i
     end
   end
-
-
-  # def vieu_cards
-  #   @p = []
-  #   @on_hands.each { |i| @p << i.first }
-  #   @p.join(' , ')
-  # end
-
-  # def open_cards_valid
-  #   if @on_hands.last.last.to_i == 11 && open_cards > 21
-  #     open_cards - 10
-  #   else
-  #     open_cards
-  #   end
-  # end
-
-  # def open_cards
-  #   @on_hands.inject(0) do |akm, i|
-  #     akm += i.last
-  #     akm
-  #   end
-  # end
-
-
-
-
-
-
-
-
-
-
-
 
 end

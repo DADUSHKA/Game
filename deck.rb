@@ -1,5 +1,4 @@
 class Deck
-
   attr_reader :cards
 
   def initialize
@@ -21,5 +20,4 @@ class Deck
       end
     end.shuffle!
 end
-
 end

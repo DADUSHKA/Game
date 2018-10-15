@@ -27,8 +27,9 @@ class Game
   end
 
   def add_cards
-    validate!
+
     @user.add_one_card
+     # validate!
     opponent_move if @assailant.open_cards_valid.to_i < 17 && @assailant.hands.size == 2
   end
 

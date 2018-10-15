@@ -31,7 +31,7 @@ class TerminalInterface
   end
 
   def add_card
-    opponent_move if @game.assailant.open_cards_valid.to_i < 17 && @assailant.hands.size == 2
+    opponent_move if @game.assailant.open_cards_valid.to_i < 17
     @game.add_cards
     add_cards
     open_cards

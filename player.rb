@@ -1,5 +1,3 @@
-require_relative 'deck'
-require_relative 'card'
 class Player
   attr_reader :name, :hands
 
@@ -26,14 +24,6 @@ class Player
     var.join(' , ')
   end
 
-  def counting_point
-    @var = 0
-    @hands.each do |obj|
-      @var += obj.point.to_i
-    end
-    @var
-  end
-
   def counting_point_validate
     counting_point
     if @hands.last.point == 11 && @var >= 25
@@ -42,4 +32,13 @@ class Player
       @var
     end
   end
+
+  def counting_point
+    @var = 0
+    @hands.each do |obj|
+      @var += obj.point.to_i
+    end
+    @var
+  end
+
 end

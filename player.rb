@@ -1,9 +1,6 @@
+require_relative 'deck'
+require_relative 'card'
 class Player
-  WIN_SCORE = 21
-  DEFAULT_VALUE = 10
-  ACE_MIN_VALUE = 1
-  ACE_MAX_VALUE = 11
-
   attr_reader :name, :hands
 
   def initialize(deck, name = 'Antagonist')
@@ -12,13 +9,13 @@ class Player
     @hands = []
   end
 
-  def add_one_card
-    @hands.concat(@deck.move_card_one)
+  def start_game
+    @hands.clear
+    add_card(2)
   end
 
-  def add_two_card
-    @hands.clear unless @hands.empty?
-    @hands.concat(@deck.move_card_two)
+  def add_card(count)
+    @hands.concat(@deck.move_card(count))
   end
 
   def view_cards
@@ -29,34 +26,20 @@ class Player
     var.join(' , ')
   end
 
-  def open_cards_valid
-    total_score = 0
-    ace_count = 0
-    @hands.each do |card|
-      ace_count += ACE_MIN_VALUE if card.value == 'A'
-      total_score += get_card_score(card)
+  def counting_point
+    @var = 0
+    @hands.each do |obj|
+      @var += obj.point.to_i
     end
-    add_ace_score(total_score, ace_count)
+    @var
   end
 
-  private
-
-  def add_ace_score(total_score, ace_count)
-    ace_count.times do
-      ace_score = ACE_MAX_VALUE - ACE_MIN_VALUE
-      total_score += ace_score if total_score + ace_score <= WIN_SCORE + 5
-    end
-    total_score
-   end
-
-  def get_card_score(card)
-    if %w[J Q K].include? card.value
-      DEFAULT_VALUE
-    elsif card.value == 'A'
-      ACE_MAX_VALUE
+  def counting_point_validate
+    counting_point
+    if @hands.last.point == 11 && @var >= 25
+      @var -= 10
     else
-      card.value.to_i
+      @var
     end
   end
-
 end

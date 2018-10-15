@@ -14,38 +14,38 @@ class Game
   end
 
   def handing_over_cards
-    @user.add_two_card
-    @assailant.add_two_card
+    @user.start_game
+    @assailant.start_game
     start_bank
   end
 
   def skip_stroke
-    @user.open_cards_valid
-    @assailant.open_cards_valid
+    @user.counting_point
+    @assailant.counting_point
     validate!
-    opponent_move if @assailant.open_cards_valid.to_i < 17
+    opponent_move if @assailant.counting_point_validate < 17
   end
 
   def add_cards
-    @user.add_one_card
-    opponent_move if @assailant.open_cards_valid.to_i < 17 && @assailant.hands.size == 2
+    @user.add_card(1)
+    opponent_move if @assailant.counting_point_validate < 17 && @assailant.hands.size == 2
   end
 
   def control_lose
-    user_lose if @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i > 21 ||
-      @assailant.open_cards_valid.to_i > @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i <= 21 && @user.open_cards_valid.to_i < 21
+    user_lose if @assailant.counting_point_validate <= 21 && @user.counting_point_validate > 21 ||
+                 @assailant.counting_point_validate > @user.counting_point_validate &&
+                 @assailant.counting_point_validate <= 21 && @user.counting_point_validate < 21
   end
 
   def control_won
-    user_won if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i <= 21 ||
-      @assailant.open_cards_valid.to_i < @user.open_cards_valid.to_i &&
-      @assailant.open_cards_valid.to_i < 21 && @user.open_cards_valid.to_i <= 21
+    user_won if @assailant.counting_point_validate > 21 && @user.counting_point_validate <= 21 ||
+                @assailant.counting_point_validate < @user.counting_point_validate &&
+                @assailant.counting_point_validate < 21 && @user.counting_point_validate <= 21
   end
 
   def control_dead_heat
-    dead_heat if @assailant.open_cards_valid.to_i > 21 && @user.open_cards_valid.to_i > 21 ||
-      @assailant.open_cards_valid.to_i == @user.open_cards_valid.to_i
+    dead_heat if @assailant.counting_point_validate > 21 && @user.counting_point_validate > 21 ||
+                 @assailant.counting_point_validate == @user.counting_point_validate
   end
 
   private
@@ -57,7 +57,7 @@ class Game
   end
 
   def opponent_move
-    @assailant.add_one_card
+    @assailant.add_card(1)
   end
 
   def user_lose
@@ -79,7 +79,7 @@ class Game
   end
 
   def validate!
-    raise "#{@user.name} не может пропустить ход!" if @assailant.open_cards_valid.to_i > 17
+    raise "#{@user.name} не может пропустить ход!" if @assailant.counting_point_validate > 17
     raise "#{@user.name} не может пропустить ход!" if @assailant.hands.size == 3
   end
 end

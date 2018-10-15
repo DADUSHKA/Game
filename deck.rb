@@ -1,3 +1,5 @@
+require_relative 'card'
+
 class Deck
   attr_reader :cards
 
@@ -5,12 +7,8 @@ class Deck
     @cards = generate_cards
   end
 
-  def move_card_two(count = 2)
-    @cards.sample(count).each { |value| value }
-  end
-
-  def move_card_one
-    move_card_two(1)
+  def move_card(count)
+    @cards.sample(count)
   end
 
   def generate_cards

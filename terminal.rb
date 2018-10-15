@@ -25,13 +25,13 @@ class TerminalInterface
   end
 
   def skip_stroke
-    opponent_move if @game.assailant.open_cards_valid.to_i < 17
+    opponent_move if @game.assailant.counting_point_validate < 17
     @game.skip_stroke
     bank
   end
 
   def add_card
-    opponent_move if @game.assailant.open_cards_valid.to_i < 17
+    opponent_move if @game.assailant.counting_point_validate < 17
     @game.add_cards
     add_cards
     open_cards
@@ -100,8 +100,8 @@ class TerminalInterface
 
   def game_results
     puts '             Итоги игры:'
-    puts "      :: #{@game.user.name}: #{@game.user.view_cards}  - очки: #{@game.user.open_cards_valid}
-      :: #{@game.assailant.name}: #{@game.assailant.view_cards}  - очки: #{@game.assailant.open_cards_valid} "
+    puts "      :: #{@game.user.name}: #{@game.user.view_cards}  - очки: #{@game.user.counting_point_validate}
+      :: #{@game.assailant.name}: #{@game.assailant.view_cards}  - очки: #{@game.assailant.counting_point_validate} "
   end
 
   def bank

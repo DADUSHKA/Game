@@ -5,7 +5,7 @@ class Deck
     @cards = generate_cards
   end
 
-  def move_card(count)
+  def card_selection(count)
     @cards.sample(count)
   end
 

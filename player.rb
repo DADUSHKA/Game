@@ -13,7 +13,7 @@ class Player
   end
 
   def add_card(count)
-    @hands.concat(@deck.move_card(count))
+    (@hands << @deck.card_selection(count)).flatten!
   end
 
   def view_cards

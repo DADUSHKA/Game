@@ -5,12 +5,8 @@ class Bank
     @bank = 100
   end
 
-  def bank_plus_two
-    @bank += 20
-  end
-
-  def bank_plus_one
-    @bank += 10
+  def bank_plus(var)
+    @bank += var
   end
 
   def bank_minus

@@ -8,8 +8,7 @@ class Game
   end
 
   def add_card(count)
-    @card_table = []
-    (@card_table << @deck.card_selection(count)).flatten!
+    card_table = @deck.card_selection(count)
   end
 
   def create_players(user)
@@ -19,8 +18,8 @@ class Game
   end
 
   def handing_over_cards
-    @user.cards_on_hends = add_card(2)
-    @assailant.cards_on_hends = add_card(2)
+    @user.cards_on_hands = add_card(2)
+    @assailant.cards_on_hands = add_card(2)
     start_bank
   end
 
@@ -32,25 +31,25 @@ class Game
   end
 
   def add_cards
-    (@user.cards_on_hends << add_card(1)).flatten!
-    opponent_move if @assailant.counting_point < 17 && @assailant.cards_on_hends.size == 2
+    (@user.cards_on_hands << add_card(1)).flatten!
+    opponent_move if @assailant.counting_point < 17 && @assailant.cards_on_hands.size == 2
   end
 
   def control_lose
     user_lose if @assailant.counting_point_validate <= 21 && @user.counting_point_validate > 21 ||
-                 @assailant.counting_point_validate > @user.counting_point_validate &&
-                 @assailant.counting_point_validate <= 21 && @user.counting_point_validate < 21
+      @assailant.counting_point_validate > @user.counting_point_validate &&
+      @assailant.counting_point_validate <= 21 && @user.counting_point_validate < 21
   end
 
   def control_won
     user_won if @assailant.counting_point_validate > 21 && @user.counting_point_validate <= 21 ||
-                @assailant.counting_point_validate < @user.counting_point_validate &&
-                @assailant.counting_point_validate < 21 && @user.counting_point_validate <= 21
+      @assailant.counting_point_validate < @user.counting_point_validate &&
+      @assailant.counting_point_validate < 21 && @user.counting_point_validate <= 21
   end
 
   def control_dead_heat
     dead_heat if @assailant.counting_point_validate > 21 && @user.counting_point_validate > 21 ||
-                 @assailant.counting_point_validate == @user.counting_point_validate
+      @assailant.counting_point_validate == @user.counting_point_validate
   end
 
   private
@@ -62,28 +61,28 @@ class Game
   end
 
   def opponent_move
-    (@assailant.cards_on_hends << add_card(1)).flatten!
+    (@assailant.cards_on_hands << add_card(1)).flatten!
   end
 
   def user_lose
     @bank_user.bank
-    @bank_assailant.bank_plus_two
+    @bank_assailant.bank_plus(20)
     @sum = 0
   end
 
   def user_won
-    @bank_user.bank_plus_two
+    @bank_user.bank_plus(20)
     @bank_assailant.bank
     @sum = 0
   end
 
   def dead_heat
-    @bank_user.bank_plus_one
-    @bank_assailant.bank_plus_one
+    @bank_user.bank_plus(10)
+    @bank_assailant.bank_plus(10)
     @sum = 0
   end
 
   def validate!
-    raise "#{@user.name} не может пропустить ход!" if @assailant.cards_on_hends.size == 3
+    raise "#{@user.name} не может пропустить ход!" if @assailant.cards_on_hands.size == 3
   end
 end

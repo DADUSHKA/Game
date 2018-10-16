@@ -12,9 +12,9 @@ class TerminalInterface
     validate!
     @game.create_players(@name)
     play_game
-  rescue StandardError => e
-    puts "Ошибка: #{e.message}"
-    retry
+    rescue StandardError => e
+      puts "Ошибка: #{e.message}"
+      retry
   end
 
   def play_game
@@ -25,14 +25,14 @@ class TerminalInterface
   end
 
   def skip_stroke
-    @game.skip_stroke
     opponent_move if @game.assailant.counting_point < 17
+    @game.skip_stroke
     bank
   end
 
   def add_card
-    @game.add_cards
     opponent_move if @game.assailant.counting_point < 17
+    @game.add_cards
     add_cards
     open_cards
   end
@@ -62,9 +62,9 @@ class TerminalInterface
         else
           option(wrong)
         end
-      rescue StandardError => e
-        puts "Ошибка: #{e.message}"
-        retry
+        rescue StandardError => e
+          puts "Ошибка: #{e.message}"
+          retry
       end
     end
   end

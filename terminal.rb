@@ -25,14 +25,14 @@ class TerminalInterface
   end
 
   def skip_stroke
-    opponent_move if @game.assailant.counting_point_validate < 17
     @game.skip_stroke
+    opponent_move if @game.assailant.counting_point_validate < 17
     bank
   end
 
   def add_card
-    opponent_move if @game.assailant.counting_point_validate < 17
     @game.add_cards
+    opponent_move if @game.assailant.counting_point_validate < 17
     add_cards
     open_cards
   end

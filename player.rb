@@ -1,24 +1,24 @@
 class Player
-  attr_reader :name, :hands
+  attr_reader :name, :card_table
 
   def initialize(deck, name = 'Antagonist')
     @name = name
     @deck = deck
-    @hands = []
+    @card_table = []
   end
 
   def start_game
-    @hands.clear
+    @card_table.clear
     add_card(2)
   end
 
   def add_card(count)
-    (@hands << @deck.card_selection(count)).flatten!
+    (@card_table << @deck.card_selection(count)).flatten!
   end
 
   def view_cards
     var = []
-    @hands.each do |obj|
+    @card_table.each do |obj|
       var << "#{obj.suit + ' ' + obj.value} "
     end
     var.join(' , ')
@@ -26,7 +26,7 @@ class Player
 
   def counting_point_validate
     counting_point
-    if @hands.last.point == 11 && @var >= 25
+    if @card_table.last.point == 11 && @var >= 25
       @var -= 10
     else
       @var
@@ -35,7 +35,7 @@ class Player
 
   def counting_point
     @var = 0
-    @hands.each do |obj|
+    @card_table.each do |obj|
       @var += obj.point.to_i
     end
     @var

@@ -8,7 +8,7 @@ class Game
   end
 
   def add_card(count)
-    card_table = @deck.card_selection(count)
+   @deck.card_selection(count)
   end
 
   def create_players(user)

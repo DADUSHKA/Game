@@ -7,15 +7,20 @@ class Game
     @bank_user = Bank.new
   end
 
+  def add_card(count)
+    @card_table = []
+    (@card_table << @deck.card_selection(count)).flatten!
+  end
+
   def create_players(user)
     name = user
-    @user = User.new(@deck, name)
-    @assailant = Assailant.new(@deck)
+    @user = User.new(name)
+    @assailant = Assailant.new
   end
 
   def handing_over_cards
-    @user.start_game
-    @assailant.start_game
+    @user.cards_on_hends = add_card(2)
+    @assailant.cards_on_hends = add_card(2)
     start_bank
   end
 
@@ -23,12 +28,12 @@ class Game
     @user.counting_point
     @assailant.counting_point
     validate!
-    opponent_move if @assailant.counting_point_validate < 17
+    opponent_move if @assailant.counting_point < 17
   end
 
   def add_cards
-    @user.add_card(1)
-    opponent_move if @assailant.counting_point_validate < 17 && @assailant.hands.size == 2
+    (@user.cards_on_hends << add_card(1)).flatten!
+    opponent_move if @assailant.counting_point < 17 && @assailant.cards_on_hends.size == 2
   end
 
   def control_lose
@@ -57,7 +62,7 @@ class Game
   end
 
   def opponent_move
-    @assailant.add_card(1)
+    (@assailant.cards_on_hends << add_card(1)).flatten!
   end
 
   def user_lose
@@ -79,7 +84,6 @@ class Game
   end
 
   def validate!
-    raise "#{@user.name} не может пропустить ход!" if @assailant.counting_point_validate > 17
-    raise "#{@user.name} не может пропустить ход!" if @assailant.hands.size == 3
+    raise "#{@user.name} не может пропустить ход!" if @assailant.cards_on_hends.size == 3
   end
 end

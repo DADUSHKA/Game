@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'player'
 require_relative 'user'
 require_relative 'assailant'
